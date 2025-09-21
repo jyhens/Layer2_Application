@@ -1,0 +1,48 @@
+# -----------------------------
+# OS / Tools
+# -----------------------------
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# Editors / IDEs
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.user
+*.userossc
+*.sln.docstates
+
+# Node / Vite (frontend)
+leave-planner-web/node_modules/
+leave-planner-web/dist/
+leave-planner-web/.vite/
+leave-planner-web/.vite-temp/
+leave-planner-web/.eslintcache
+leave-planner-web/coverage/
+leave-planner-web/*.local
+leave-planner-web/.env.local
+leave-planner-web/.env.*.local
+
+# .NET (backend)
+LeavePlanner.Api/bin/
+LeavePlanner.Api/obj/
+LeavePlanner.Api/**/TestResults/
+LeavePlanner.Api/**/PublishProfiles/
+LeavePlanner.Api/**/AppPackages/
+LeavePlanner.Api/**/BundleArtifacts/
+LeavePlanner.Api/**/GeneratedFiles/
+
+# Local config variants (keep shared configs, ignore personal ones)
+LeavePlanner.Api/**/appsettings.*.Local.json
+
+# SQLite databases (created at runtime)
+*.db
+*.db-shm
+*.db-wal
+
+# Swagger static exports (not used unless you explicitly generate)
+wwwroot/swagger/
