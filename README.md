@@ -149,11 +149,11 @@ Die API antwortet bei Fehlern mit kurzen, UI-tauglichen Texten
 
 ### Konfiguration (appsettings)
 Die Umgebung wird über `ASPNETCORE_ENVIRONMENT` bestimmt (`Development` | `Production`).  
-Die *environment*-Datei **überlagert** `appsettings.json`.
+Die *environment*-Datei überlagert `appsettings.json`.
 
 ### Start im Entwicklungsmodus
-cd LeavePlanner.Api
-dotnet run --launch-profile "DevHttp"
+- cd LeavePlanner.Api
+- dotnet run --launch-profile "DevHttp"
 
 Verhalten
 - Datenbank wird automatisch erstellt/migriert (SQLite).
@@ -164,8 +164,8 @@ Verhalten
   - GET /health/db  → DB-Verbindung & Migrationsstatus
 
 ### Start im Production-Modus (lokal)
-set ASPNETCORE_ENVIRONMENT=Production
-dotnet run --launch-profile "ProdHttp"
+- set ASPNETCORE_ENVIRONMENT=Production
+- dotnet run --launch-profile "ProdHttp"
 
 Verhalten 
 - Swagger & Seeding: deaktiviert
@@ -181,9 +181,9 @@ Verhalten
 VITE_API_BASE_URL=http://localhost:5268
 
 ### Start
-cd leave-planner-web
-npm install
-npm run dev -> öffnet i. d. R. http://localhost:5173
+- cd leave-planner-web
+- npm install
+- npm run dev -> öffnet i. d. R. http://localhost:5173
 
 ## Lokal starten – Tests
 - Konflikt bei Approved Urlaub von Teammitgliedern.
