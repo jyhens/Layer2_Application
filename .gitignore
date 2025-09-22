@@ -26,6 +26,8 @@ leave-planner-web/coverage/
 leave-planner-web/*.local
 leave-planner-web/.env.local
 leave-planner-web/.env.*.local
+leave-planner-web/.env
+
 
 # .NET (backend)
 LeavePlanner.Api/bin/
@@ -35,14 +37,32 @@ LeavePlanner.Api/**/PublishProfiles/
 LeavePlanner.Api/**/AppPackages/
 LeavePlanner.Api/**/BundleArtifacts/
 LeavePlanner.Api/**/GeneratedFiles/
+**/bin/
+**/obj/
+**/TestResults/
+*.trx
+*.coverage
+*.coveragexml
 
-# Local config variants (keep shared configs, ignore personal ones)
+# Vite cache
+leave-planner-web/.vite/
+leave-planner-web/.vite-temp/
+
+# OS/IDE
+.vscode/
+*.user
+*.suo
+.DS_Store
+Thumbs.db
+
+
+# Local config variants 
 LeavePlanner.Api/**/appsettings.*.Local.json
 
-# SQLite databases (created at runtime)
+# SQLite databases 
 *.db
 *.db-shm
 *.db-wal
 
-# Swagger static exports (not used unless you explicitly generate)
+# Swagger static exports 
 wwwroot/swagger/

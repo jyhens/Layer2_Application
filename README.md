@@ -1,7 +1,4 @@
-"# Layer2 Project" 
-
 # LeavePlanner – Urlaubsanträge mit Konfliktprüfung
-
 
 ## Projektziel: 
 C# WebAPI mit optionaler UI zu entwickeln, die Mitarbeitenden erlaubt, Urlaubsanträge für einzelne Arbeitstage zu stellen. Die API prüft automatisch, ob an diesem Tag Konflikte mit anderen Teammitgliedern in denselben Projekten entstehen, und liefert entsprechende Konflikthinweise. Der Genehmigungsprozess berücksichtigt unterschiedliche Rollen (Employee, Approver, Admin) und Benachrichtigungen informieren über Statusänderungen.
@@ -9,7 +6,7 @@ C# WebAPI mit optionaler UI zu entwickeln, die Mitarbeitenden erlaubt, Urlaubsan
 ## Kurzarchitektur
 
 ### Datenmodell
-Die Anwendung basiert auf **Entity Framework Core** mit **SQLite** als persistenter Datenbank (`leaveplanner.db`, Connection String in `appsettings.json`).  
+Die Anwendung basiert auf Entity Framework Core mit SQLite als persistenter Datenbank (`leaveplanner.db`, Connection String in `appsettings.json`).  
 Die zentralen Entitäten sind:
 
 - **Employee** – Mitarbeitende mit `Id`, `Name`, `JobTitle` und `Role` (Enum: `Employee`, `Approver`, `Admin`).  
@@ -106,7 +103,7 @@ Die API antwortet bei Fehlern mit kurzen, UI-tauglichen Texten
   - `Customer does not exist.`  
   - `EndDate must be null or >= StartDate.`
 
-**401 Unauthorized** Erforderlicher Header fehlt/ungültig (nur bei **Approve/Reject**, **Notifications**, **Role-Update**).  
+**401 Unauthorized** Erforderlicher Header fehlt/ungültig (nur bei Approve/Reject, Notifications, Role-Update).  
 - **Beispiel:**  
   - `Provide X-Employee-Id header.`
 
@@ -140,8 +137,8 @@ Die API antwortet bei Fehlern mit kurzen, UI-tauglichen Texten
 - Details in den Serverlogs.
 
 **Hinweise allgemein**  
-- `X-Employee-Id: <GUID>` ist **nur** für Approve/Reject, Notifications (GET/mark-read) und Role-Update nötig.  
-- Fehlermeldungen sind bewusst **kurz und präzise** gehalten (für Toasts).  
+- `X-Employee-Id: <GUID>` ist nur für Approve/Reject, Notifications (GET/mark-read) und Role-Update nötig.  
+- Fehlermeldungen kurz und präzise (für Toasts).  
 
 
 ## Lokal starten – Backend
@@ -188,7 +185,22 @@ cd leave-planner-web
 npm install
 npm run dev -> öffnet i. d. R. http://localhost:5173
 
-## Rollen & UI-Abläufe (kurz)
+## Lokal starten – Tests
+- Konflikt bei Approved Urlaub von Teammitgliedern.
+- Kein Konflikt, wenn Team frei ist.
+- Beim Approve zählen auch Requested Urlaubstage anderer.
+- Mitarbeitende ohne Projektzuordnung erzeugen keine Konflikte.
+- Doppelte Anträge (selber Mitarbeiter, selbes Datum) liefern 409 Conflict.
+
+### Voraussetzungen
+- Projekt: LeavePlanner.Api.Tests (xUnit, FluentAssertions)
+- Abhängig von: LeavePlanner.Api (ProjectReference)
+- nutzt xunit, FluentAssertions, Microsoft.AspNetCore.Mvc.Testing (8.*), Microsoft.EntityFrameworkCore.Sqlite 
+
+### Test starten
+dotnet test
+
+## Rollen & UI-Abläufe 
 Voraussetzung: UI sendet `X-Employee-Id` (GUID).  
 
 ### Employee
@@ -205,3 +217,5 @@ Voraussetzung: UI sendet `X-Employee-Id` (GUID).
 ### Admin (zusätzlich zu Approver)
 - Mitarbeitende anlegen/bearbeiten/löschen; Rollen ändern
 - CRUD Kunden/Projekte ; Assignments pflegen 
+
+

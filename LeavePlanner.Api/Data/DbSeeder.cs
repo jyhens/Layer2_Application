@@ -10,16 +10,16 @@ public static class DbSeeder
         if (db.Employees.Any()) return;
 
         // ===== Employees (1 Admin, 2 Approver, 6 Dev) =====
-        var admin = new Employee { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), Name = "Amira Admin",  JobTitle = "Admin",     Role = UserRole.Admin };
+        var admin = new Employee { Id = Guid.Parse("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa1"), Name = "Amira Admin", JobTitle = "Admin", Role = UserRole.Admin };
         var appr1 = new Employee { Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbb1"), Name = "Peter Product", JobTitle = "Approver", Role = UserRole.Approver };
         var appr2 = new Employee { Id = Guid.Parse("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbb2"), Name = "Sofia Supervisor", JobTitle = "Approver", Role = UserRole.Approver };
 
-        var dev1 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc1"), Name = "Alice Nguyen",  JobTitle = "Developer", Role = UserRole.Employee };
-        var dev2 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc2"), Name = "Bob Meier",     JobTitle = "Developer", Role = UserRole.Employee };
-        var dev3 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc3"), Name = "Carlos Diaz",   JobTitle = "Developer", Role = UserRole.Employee };
-        var dev4 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc4"), Name = "Daria Novak",   JobTitle = "Developer", Role = UserRole.Employee };
-        var dev5 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc5"), Name = "Eren Kaya",     JobTitle = "Developer", Role = UserRole.Employee };
-        var dev6 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc6"), Name = "Fatima Ali",    JobTitle = "Developer", Role = UserRole.Employee };
+        var dev1 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc1"), Name = "Alice Nguyen", JobTitle = "Developer", Role = UserRole.Employee };
+        var dev2 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc2"), Name = "Bob Meier", JobTitle = "Developer", Role = UserRole.Employee };
+        var dev3 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc3"), Name = "Carlos Diaz", JobTitle = "Developer", Role = UserRole.Employee };
+        var dev4 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc4"), Name = "Daria Novak", JobTitle = "Developer", Role = UserRole.Employee };
+        var dev5 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc5"), Name = "Eren Kaya", JobTitle = "Developer", Role = UserRole.Employee };
+        var dev6 = new Employee { Id = Guid.Parse("cccccccc-cccc-cccc-cccc-ccccccccccc6"), Name = "Fatima Ali", JobTitle = "Developer", Role = UserRole.Employee };
 
         db.Employees.AddRange(admin, appr1, appr2, dev1, dev2, dev3, dev4, dev5, dev6);
 
@@ -35,7 +35,7 @@ public static class DbSeeder
             Name = "Project A1",
             CustomerId = customerA.Id,
             StartDate = new DateOnly(2025, 1, 1),
-            EndDate   = new DateOnly(2025, 12, 31)
+            EndDate = new DateOnly(2025, 12, 31)
         };
 
         var p2 = new Project
@@ -44,7 +44,7 @@ public static class DbSeeder
             Name = "Project B1",
             CustomerId = customerB.Id,
             StartDate = new DateOnly(2025, 3, 1),
-            EndDate   = new DateOnly(2025, 11, 30)
+            EndDate = new DateOnly(2025, 11, 30)
         };
 
         var p3 = new Project
@@ -53,7 +53,7 @@ public static class DbSeeder
             Name = "Project B2",
             CustomerId = customerB.Id,
             StartDate = new DateOnly(2025, 9, 1),
-            EndDate   = new DateOnly(2026, 3, 31) // reicht in 2026 hinein
+            EndDate = new DateOnly(2026, 3, 31) // reicht in 2026 hinein
         };
 
         db.Projects.AddRange(p1, p2, p3);
@@ -140,4 +140,25 @@ public static class DbSeeder
 
         db.SaveChanges();
     }
+
+    public static void SeedForTests(LeavePlannerDbContext db)
+        {
+            if (db.Employees.Any()) return;
+
+            var admin = new Employee { Name = "Admin", Role = UserRole.Admin };
+            var approver = new Employee { Name = "Approver", Role = UserRole.Approver };
+            var e1 = new Employee { Name = "Alice", Role = UserRole.Employee };
+            var e2 = new Employee { Name = "Bob", Role = UserRole.Employee };
+
+            var cust = new Customer { Name = "THE Customer" };
+            var proj = new Project { Name = "THE Project", Customer = cust, StartDate = DateOnly.FromDateTime(DateTime.UtcNow.Date) };
+
+            db.AddRange(admin, approver, e1, e2, cust, proj);
+            db.ProjectAssignments.AddRange(
+                new ProjectAssignment { Employee = e1, Project = proj },
+                new ProjectAssignment { Employee = e2, Project = proj }
+            );
+
+            db.SaveChanges();
+        }
 }

@@ -60,8 +60,12 @@ if (app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<LeavePlannerDbContext>();
-    await db.Database.MigrateAsync();
+    var env = scope.ServiceProvider.GetRequiredService<IHostEnvironment>();
+    if (!env.IsEnvironment("Testing"))   
+    {
+        var db = scope.ServiceProvider.GetRequiredService<LeavePlannerDbContext>();
+        await db.Database.MigrateAsync();
+    }
 }
 
 if (app.Environment.IsDevelopment())
@@ -124,3 +128,4 @@ app.MapGet("/health/info", (IHostEnvironment env) =>
 app.MapControllers();
 
 app.Run();
+public partial class Program { }
